@@ -12,6 +12,11 @@ public:
     //ћетод вставить в конец списка
     void push_back(T data);
 
+    //удаление первого элемента списка
+    void pop_front();
+
+    void clear();
+ 
     //ћетод возвращени€ количества элементов
     int GetSize() { return Size; }
 
@@ -61,6 +66,7 @@ List<T>::List()
 template <typename T>
 List<T>::~List()
 {
+    clear();
 }
 
 template <typename T>
@@ -98,12 +104,39 @@ void List<T>::push_back(T data)
     Size++;
 }
 
+//”даление первого элемента
+template <typename T>
+void List<T>::pop_front()
+{
+    //временна€ переменна€, хран€ща€ первый элемент
+    Node<T>* temp = head;
+
+    //в хеад присвоим следующий элемент, что бы хед стал следующим элементом
+    head = head->pNext;
+
+    //удал€ем оригинальный первый элемент
+    delete temp;
+
+    Size--;
+}
+
+//ќчищение списка 
+//пока переменна€ Size > 0 
+template <typename T>
+void List<T>::clear()
+{
+    while (Size)
+    {
+        pop_front();
+    }
+}
+
 //ѕерегрузка оператора индексировани€
 template <typename T>
 T& List<T>::operator[](const int index)
 {
     int counter = 0;
-    //в начале всегда текущий элемент присваеваем первому элементу 
+    //в начале всегда текущий элемент присваеваем первому элементу
     Node<T>* current = this->head;
     while (current != nullptr)
     {
@@ -123,27 +156,42 @@ int main()
     setlocale(LC_ALL, "ru");
 
     List<int> lst;
-    //lst.push_back(5);
-    //lst.push_back(10);
-    //lst.push_back(22);
+    lst.push_back(55);
+    lst.push_back(11);
+    lst.push_back(22);
 
     //cout << lst[0] << endl;
 
-    int numbersCount;
-    cin >> numbersCount;
+    //int numbersCount;
+    //cin >> numbersCount;
 
-
-    //ввод чисел 
-    for (int i = 0; i < numbersCount; i++)
-    {
-        lst.push_back(rand()%10);
-    }
+    ////ввод чисел
+    //for (int i = 0; i < numbersCount; i++)
+    //{
+    //    lst.push_back(rand()%10);
+    //}
 
     //вывод чисел
     for (int i = 0; i < lst.GetSize(); i++)
     {
         cout << lst[i] << endl;
     }
+
+    //cout << endl
+    //     << "Ёлементов в списке " << lst.GetSize() << endl
+    //     << "¬ыполн€ю метод clear" << endl
+    //     << endl;
+
+    //lst.clear();
+
+    ////вывод чисел
+    //for (int i = 0; i < lst.GetSize(); i++)
+    //{
+    //    cout << lst[i] << endl;
+    //}
+
+    //cout << endl
+    //     << "Ёлементов в списке " << lst.GetSize() << endl;
 
     return 0;
 }
